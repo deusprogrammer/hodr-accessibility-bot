@@ -1,0 +1,25 @@
+{
+    "_start": {
+        "url": "http://localhost:3000",
+        "instruction": "Locate and click the form element that will allow you to load the rom file",
+        "success": {
+            "condition": "responseIncludes",
+            "testValue": "Choose File",
+            "onSuccess": {
+                "action": "input",
+                "selector": "input[type='file']",
+                "value": "./rom.nes",
+                "valueType": "file"
+            }
+        },
+        "next": "_end"
+    },
+    "rom_loaded": {
+        "instruction": "Randomize your rom with vanilla overworld settings, generate a random seed, and then randomize the rom",
+        "success": {
+            "condition": "textExists",
+            "testValue": "Randomization Successful!"
+        },
+        "next": "rom_randomized"
+    }
+}
