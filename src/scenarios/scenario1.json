@@ -1,19 +1,70 @@
 {
-    "_start": {
-        "url": "http://localhost:3000/blogs",
-        "instruction": "Like and leave a comment on the blog post about farting.  Be sure to click the button to submit it after you finish writing your comment.",
-        "success": {
-            "condition": "responseIncludes",
-            "testValue": "Add a comment"
+    "llmModel": "llama3.1",
+    "llmUrl": "http://localhost:11434",
+    "maxRetries": 3,
+    "steps": {
+        "_start": {
+            "url": "http://localhost:3000/blogs",
+            "instruction": "Like and leave a comment on the blog post about farting.  Be sure to click the button to submit it after you finish writing your comment.",
+            "success": [
+                {
+                    "condition": "actionTaken",
+                    "description": "Click the like button on the blog post",
+                    "testValue": {
+                        "action": "click",
+                        "role": "Button",
+                        "target": "Like blog with title A Storm's a Brewin'"
+                    }
+                },{
+                    "condition": "actionTaken",
+                    "description": "Add a comment to the blog post",
+                    "testValue": {
+                        "action": "type",
+                        "role": "Textbox",
+                        "target": "Add a comment..."
+                    }
+                },{
+                    "condition": "actionTaken",
+                    "description": "Submit the comment on the blog post",
+                    "testValue": {
+                        "action": "click",
+                        "role": "Button",
+                        "target": "Add a comment on blog with title A Storm's a Brewin'"
+                    }
+                }
+            ],
+            "next": "write_blog"
         },
-        "next": "write_blog"
-    },
-    "write_blog": {
-        "instruction": "Use the form to write a new blog post about how much you dislike your boss.  Do not leave this as a comment on another blog post.  Be sure to click the button to submit it after you finish writing your blog post.",
-        "success": {
-            "condition": "responseIncludes",
-            "testValue": "Submit"
-        },
-        "next": "_end"
+        "write_blog": {
+            "instruction": "Use the form to write a new blog post about how much you dislike your boss.  Do not leave this as a comment on another blog post.  Be sure to click the button to submit it after you finish writing your blog post.",
+            "success": [
+                {
+                    "condition": "actionTaken",
+                    "description": "Enter the title of the new blog post",
+                    "testValue": {
+                        "action": "type",
+                        "role": "Textbox",
+                        "target": "Title"
+                    }
+                },{
+                    "condition": "actionTaken",
+                    "description": "Enter the content of the new blog post",
+                    "testValue": {
+                        "action": "type",
+                        "role": "Textbox",
+                        "target": "Content"
+                    }
+                },{
+                    "condition": "actionTaken",
+                    "description": "Submit the new blog post",
+                    "testValue": {
+                        "action": "click",
+                        "role": "Button",
+                        "target": "Submit your blog entry"
+                    }
+                }
+            ],
+            "next": "_end"
+        }
     }
 }
